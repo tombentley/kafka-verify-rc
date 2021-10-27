@@ -43,13 +43,6 @@ fi
 
 set +e
 
-for x in $TMPDIR; do
-    if [ -z ${!x} ]; then
-        echo "missing required environment variable: $x"
-        exit 1
-    fi
-done
-
 for x in wget gpg md5sum sha1sum sha512sum tr cut tar gradle sed; do
     which $x >/dev/null
     if [ $? -ne 0 ]; then
@@ -60,7 +53,7 @@ done
 set -e
 
 declare -r KEYS_URL='https://kafka.apache.org/KEYS'
-declare -r WORKDIR="$TMPDIR/$$.out"
+declare -r WORKDIR="$(mktemp -d -t kafkatmp.XXX 2>/dev/null || mktemp -d -t 'kafkatmp')"
 declare -r KEYS_FILE="$WORKDIR/keys.out"
 declare -r VERSION="$1"
 declare -r REMOTE_RELEASE_SITE="$2"
