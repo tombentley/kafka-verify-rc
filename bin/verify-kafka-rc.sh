@@ -43,7 +43,7 @@ fi
 
 set +e
 
-for x in wget gpg md5sum sha1sum sha512sum tr cut tar gradle sed; do
+for x in wget gpg md5sum sha1sum sha512sum tr cut tar sed; do
     which $x >/dev/null
     if [ $? -ne 0 ]; then
         echo "missing required utility $x">&2
